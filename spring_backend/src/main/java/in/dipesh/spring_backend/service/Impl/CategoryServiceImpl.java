@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import in.dipesh.spring_backend.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -20,6 +21,11 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryEntity newEntity = convertToEntity(request);
         repository.save(newEntity);
         return convertToResponse(newEntity);
+    }
+
+    @Override
+    public List<CategoryResponse> getCategories() {
+        return repository.findAll().stream().map(this::convertToResponse).toList();
     }
 
     private CategoryResponse convertToResponse(CategoryEntity newEntity) {
