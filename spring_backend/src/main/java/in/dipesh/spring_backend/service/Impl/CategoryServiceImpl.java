@@ -4,9 +4,11 @@ import in.dipesh.spring_backend.dto.CategoryRequest;
 import in.dipesh.spring_backend.dto.CategoryResponse;
 import in.dipesh.spring_backend.entity.CategoryEntity;
 import in.dipesh.spring_backend.service.CategoryService;
+import in.dipesh.spring_backend.service.FileUploadService;
 import lombok.AllArgsConstructor;
 import in.dipesh.spring_backend.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,10 +17,13 @@ import java.util.UUID;
 @Service
 public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository repository;
+    private FileUploadService fileUploadService;
 
     @Override
-    public CategoryResponse addCategory(CategoryRequest request) {
+    public CategoryResponse addCategory(CategoryRequest request, MultipartFile file) {
+        String imgUrl = fileUploadService.uploadFile(file);
         CategoryEntity newEntity = convertToEntity(request);
+        newEntity.setImgUrl(imgUrl);
         repository.save(newEntity);
         return convertToResponse(newEntity);
     }
@@ -26,6 +31,13 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryResponse> getCategories() {
         return repository.findAll().stream().map(this::convertToResponse).toList();
+    }
+
+    @Override
+    public void deleteCategory(String categoryId) {
+        CategoryEntity category = repository.findByCategoryId(categoryId).orElseThrow(()-> new RuntimeException("category not found"+categoryId));
+        fileUploadService.deleteFile(category.getImgUrl());
+        repository.delete(category);
     }
 
     private CategoryResponse convertToResponse(CategoryEntity newEntity) {
