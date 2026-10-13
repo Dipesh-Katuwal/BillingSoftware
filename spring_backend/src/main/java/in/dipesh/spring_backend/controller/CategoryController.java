@@ -14,12 +14,12 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/api/categories")
 @AllArgsConstructor
 public class CategoryController {
     CategoryService service;
 
-    @PostMapping("/addcategory")
+    @PostMapping("/addCategory")
     public ResponseEntity<CategoryResponse> addCategory(@RequestPart("category")CategoryRequest request,@RequestPart(value="file",required = false) MultipartFile file){
          CategoryResponse res = service.addCategory(request,file);
          return ResponseEntity.status(HttpStatus.CREATED).body(res);
