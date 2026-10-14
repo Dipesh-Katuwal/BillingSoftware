@@ -1,0 +1,114 @@
+.explore-container {
+  display: flex;
+  gap: 24px;
+  height: calc(100vh - 5rem);
+  min-height: 0;
+  padding: 16px 20px 10px;
+  background-color: #222728;
+}
+
+.explore-container .left-column,
+.explore-container .right-column {
+  min-width: 0;
+  min-height: 0;
+  padding: 20px;
+  border: 1px solid #858b8d;
+  border-radius: 10px;
+  background-color: #222728;
+}
+
+.explore-container .left-column {
+  display: flex;
+  flex: 2.2;
+  flex-direction: column;
+}
+
+.explore-container .first-row {
+  flex: 0 0 32%;
+  min-height: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.explore-container .horizontal-line {
+  flex: 0 0 auto;
+  margin: 0 0 22px;
+  border-color: #858b8d;
+  opacity: 0.3;
+}
+
+.explore-container .second-row {
+  flex: 1 1 auto;
+  min-height: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.explore-container .right-column {
+  flex: 1;
+}
+
+.explore-container .customer-form-container {
+  flex: 0 0 18%;
+  height: auto !important;
+  min-height: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.explore-container .right-column > hr {
+  flex: 0 0 auto;
+  margin: 0 0 16px !important;
+  border-color: #858b8d;
+  opacity: 0.3;
+}
+
+.explore-container .cart-items-container {
+  flex: 1 1 auto;
+  height: auto !important;
+  min-height: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.explore-container .cart-summary-container {
+  flex: 0 0 25%;
+  height: auto !important;
+  min-height: 0;
+  padding-top: 14px;
+  border-top: 1px solid #858b8d;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .explore-container {
+    height: auto;
+    min-height: calc(100vh - 5rem);
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .explore-container .left-column {
+    flex: 0 0 auto;
+    min-height: 420px;
+  }
+
+  .explore-container .right-column {
+    flex: 0 0 auto;
+    min-height: 480px;
+  }
+
+  .explore-container .first-row {
+    flex-basis: 32%;
+  }
+
+  .explore-container .customer-form-container {
+    flex-basis: 18%;
+  }
+
+  .explore-container .cart-summary-container {
+    flex-basis: 25%;
+  }
+}

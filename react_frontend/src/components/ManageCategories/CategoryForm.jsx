@@ -1,60 +1,63 @@
-import { useEffect, useState } from 'react'
-import { categoriesAPI } from '../../api/categoriesAPI'
+import { useEffect, useState } from "react";
+import { categoriesAPI } from "../../api/categoriesAPI";
 
 export const CategoryForm = () => {
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
-  const [backgroundColor, setBackgroundColor] = useState('#b64848')
-  const [image, setImage] = useState(null)
-  const [imagePreview, setImagePreview] = useState('')
-  const [isSaving, setIsSaving] = useState(false)
- const [error, setError] = useState(null)
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [backgroundColor, setBackgroundColor] = useState("#b64848");
+  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (!image) {
-      setImagePreview('')
-      return
+      setImagePreview("");
+      return;
     }
 
-    const previewUrl = URL.createObjectURL(image)
-    setImagePreview(previewUrl)
+    const previewUrl = URL.createObjectURL(image);
+    setImagePreview(previewUrl);
 
-    return () => URL.revokeObjectURL(previewUrl)
-  }, [image])
+    return () => URL.revokeObjectURL(previewUrl);
+  }, [image]);
 
   const handleSubmit = async (event) => {
-    event.preventDefault()
-    setError('')
-    setIsSaving(true)
+    event.preventDefault();
+    setError("");
+    setIsSaving(true);
 
     try {
       await categoriesAPI.addCategory(
         { name, description, backgroundColor },
         image,
-      )
-      setName('')
-      setDescription('')
-      setBackgroundColor('#000000')
-      setImage(null)
+      );
+      setName("");
+      setDescription("");
+      setBackgroundColor("#000000");
+      setImage(null);
     } catch (submitError) {
       setError(
         submitError.response?.data?.message ||
           submitError.message ||
-          'Unable to save the category.',
-      )
+          "Unable to save the category.",
+      );
     } finally {
-      setIsSaving(false)
+      setIsSaving(false);
     }
-  }
+  };
 
   return (
-    <form className="card col-8 h-100 align-self-start text-dark" onSubmit={handleSubmit}>
+    <form
+      className="card col-8 h-100 align-self-start text-dark"
+      onSubmit={handleSubmit}
+    >
       <div className="card-body p-4">
         <div className="mb-4">
           <label
             className="border rounded bg-light d-flex align-items-center justify-content-center overflow-hidden"
             htmlFor="category-image"
-            style={{ width: '48px', height: '48px', cursor: 'pointer' }}
+            style={{ width: "48px", height: "48px", cursor: "pointer" }}
             title="Choose category image"
           >
             {imagePreview ? (
@@ -92,7 +95,10 @@ export const CategoryForm = () => {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="category-description" className="form-label fw-semibold">
+          <label
+            htmlFor="category-description"
+            className="form-label fw-semibold"
+          >
             Description
           </label>
           <textarea
@@ -106,7 +112,10 @@ export const CategoryForm = () => {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="category-background-color" className="form-label fw-semibold">
+          <label
+            htmlFor="category-background-color"
+            className="form-label fw-semibold"
+          >
             Background color
           </label>
           <input
@@ -118,19 +127,19 @@ export const CategoryForm = () => {
             title="Choose category background color"
           />
           <input
-              id="category-background-color"
-              type="color"
-              className="form-control form-control-color d-block"
-              value='B64848FF'
-              onChange={(event) => setBackgroundColor(event.target.value)}
-              title="Choose category background color"
+            id="category-background-color"
+            type="color"
+            className="form-control form-control-color d-block"
+            value="B64848FF"
+            onChange={(event) => setBackgroundColor(event.target.value)}
+            title="Choose category background color"
           />
         </div>
 
-        <button type="submit" className="btn btn-primary w-100" >
-          {isSaving ? 'Saving...' : 'Save'}
+        <button type="submit" className="btn btn-primary w-100">
+          {isSaving ? "Saving..." : "Save"}
         </button>
       </div>
     </form>
-  )
-}
+  );
+};
