@@ -13,7 +13,7 @@ export const categoriesAPI = {
       formData.append("file", file);
     }
     return axiosClient
-      .post(`${BASE}/addCategory`, formData, {
+      .post(`${Base}/addCategory`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((res) => res.data);
