@@ -15,7 +15,7 @@ const MenuBar = () => {
             <li className="nav-item">
               <Link
                 className={`nav-link ${styles.link}`}
-                to="/dasboard"
+                to="/dashboard"
               >
                 Dashboard
               </Link>

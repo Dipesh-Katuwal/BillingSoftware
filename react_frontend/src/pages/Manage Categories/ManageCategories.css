@@ -5,6 +5,7 @@
   gap: 20px;
   height: calc(100vh - 5rem);
   background-color: #2C3335;
+  min-height: 0;
 }
 
 .left-column{
@@ -21,9 +22,138 @@
 }
 
 .right-column{
-  flex: 0.3;
+  flex: 0.5;
   border: 1px solid #CCC;
   border-radius: 8px;
   box-sizing: border-box;
   height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.category-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+  min-height: 0;
+  padding: 16px;
+}
+
+.category-search {
+  flex: 0 0 auto;
+}
+
+.category-cards {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1px 6px 1px 1px;
+}
+
+.category-card {
+  min-width: 0;
+  padding: 16px;
+  border: 0;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 14%);
+}
+
+.category-card-content {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.category-image-frame {
+  position: relative;
+  display: grid;
+  flex: 0 0 64px;
+  width: 64px;
+  height: 64px;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 8px;
+  background: rgb(255 255 255 / 18%);
+}
+
+.category-image-placeholder {
+  position: absolute;
+  color: rgb(255 255 255 / 75%);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.category-image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.category-card-details {
+  flex: 1;
+  min-width: 0;
+  color: #fff;
+}
+
+.category-card-details h2 {
+  margin: 0 0 4px;
+  overflow-wrap: anywhere;
+  font-size: 1.25rem;
+  font-weight: 650;
+}
+
+.category-card-details p {
+  margin: 0;
+  color: rgb(255 255 255 / 88%);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.category-delete-button {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-delete-button span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-delete-button:hover {
+  background: rgb(0 0 0 / 22%);
+}
+
+.category-empty-state {
+  margin: 0;
+  color: rgb(255 255 255 / 70%);
+  text-align: center;
+}
+
+@media (max-width: 767px) {
+  .category-container {
+    height: auto;
+    min-height: calc(100vh - 5rem);
+    flex-direction: column;
+  }
+
+  .left-column,
+  .right-column {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .right-column {
+    min-height: 320px;
+  }
 }

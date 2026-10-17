@@ -1,7 +1,8 @@
 import { createContext, useEffect } from "react";
 import { categoriesAPI } from "../api/categoriesAPI";
-export const AppContext = createContext(null);
 import { useState } from "react";
+
+export const AppContext = createContext(null);
 
 export const AppContextProvider = (props) => {
   const [categories,setCategories] = useState([]);
@@ -14,7 +15,8 @@ export const AppContextProvider = (props) => {
   },[])
 
   const contextValue = {
-    categories
+    categories,
+    setCategories
   }
 
   return <AppContext.Provider value={contextValue}>

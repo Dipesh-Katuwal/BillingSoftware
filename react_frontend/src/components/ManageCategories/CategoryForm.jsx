@@ -11,6 +11,7 @@ export const CategoryForm = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    
     if (!image) {
       setImagePreview("");
       return;
