@@ -1,17 +1,21 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { categoriesAPI } from "../../api/categoriesAPI";
+import { assets } from "../../assets/assets";
+import { toast } from "react-toastify";
+import { AppContext } from "../../Context/AppContext";
 
 export const CategoryForm = () => {
+  const { setCategories } = useContext(AppContext);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [backgroundColor, setBackgroundColor] = useState("#b64848");
+  const [backgroundColor, setBackgroundColor] = useState("#2c2c2c");
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    
+
     if (!image) {
       setImagePreview("");
       return;
@@ -29,20 +33,26 @@ export const CategoryForm = () => {
     setIsSaving(true);
 
     try {
-      await categoriesAPI.addCategory(
-        { name, description, backgroundColor },
+      const createdCategory = await categoriesAPI.addCategory(
+        { name, description, bgColor: backgroundColor },
         image,
       );
+      setCategories((currentCategories) => [
+        createdCategory,
+        ...currentCategories,
+      ]);
       setName("");
       setDescription("");
-      setBackgroundColor("#000000");
+      setBackgroundColor("#2c2c2c");
       setImage(null);
+      toast.success(`category ${name} added successfully`);
     } catch (submitError) {
       setError(
         submitError.response?.data?.message ||
           submitError.message ||
           "Unable to save the category.",
       );
+      toast.error("Unable to save the category.");
     } finally {
       setIsSaving(false);
     }
@@ -50,7 +60,7 @@ export const CategoryForm = () => {
 
   return (
     <form
-      className="card col-8 h-100 align-self-start text-dark"
+      className="card col-12 align-self-start text-dark"
       onSubmit={handleSubmit}
     >
       <div className="card-body p-4">
@@ -68,7 +78,7 @@ export const CategoryForm = () => {
                 className="w-100 h-100 object-fit-cover"
               />
             ) : (
-              <span className="text-secondary small">48 x 48</span>
+              <img src={assets.upload} className="w-100 h-100 object-fit-content"/>
             )}
           </label>
           <input
@@ -124,14 +134,6 @@ export const CategoryForm = () => {
             type="color"
             className="form-control form-control-color d-block"
             value={backgroundColor}
-            onChange={(event) => setBackgroundColor(event.target.value)}
-            title="Choose category background color"
-          />
-          <input
-            id="category-background-color"
-            type="color"
-            className="form-control form-control-color d-block"
-            value="B64848FF"
             onChange={(event) => setBackgroundColor(event.target.value)}
             title="Choose category background color"
           />
