@@ -8,7 +8,7 @@ export const CategoryForm = () => {
   const { setCategories } = useContext(AppContext);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [backgroundColor, setBackgroundColor] = useState("#2c2c2c");
+  const [backgroundColor, setBackgroundColor] = useState("#2C3335");
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const [isSaving, setIsSaving] = useState(false);

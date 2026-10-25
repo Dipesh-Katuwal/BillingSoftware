@@ -13,7 +13,7 @@ export const categoriesAPI = {
       formData.append("file", file);
     }
     return axiosClient
-      .post(`${Base}/addCategory`, formData, {
+      .post(`/admin${Base}/addCategory`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((res) => res.data);
@@ -21,5 +21,5 @@ export const categoriesAPI = {
   getCategories: () =>
     axiosClient.get(`${Base}/getCategories`).then((r) => r.data),
   deleteCategory: (categoryId) =>
-    axiosClient.delete(`${Base}/deleteCategory/${categoryId}`),
+    axiosClient.delete(`/admin${Base}/deleteCategory/${categoryId}`),
 };

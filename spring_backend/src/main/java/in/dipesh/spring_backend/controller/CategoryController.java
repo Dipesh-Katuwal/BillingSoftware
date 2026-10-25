@@ -13,24 +13,22 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:5173/")
 @RestController
-@RequestMapping("/api/categories")
 @AllArgsConstructor
 public class CategoryController {
     CategoryService service;
 
-    @PostMapping("/addCategory")
+    @PostMapping("admin/categories/addCategory")
     public ResponseEntity<CategoryResponse> addCategory(@RequestPart("category")CategoryRequest request,@RequestPart(value="file",required = false) MultipartFile file){
          CategoryResponse res = service.addCategory(request,file);
          return ResponseEntity.status(HttpStatus.CREATED).body(res);
     }
-    @GetMapping("/getCategories")
+    @GetMapping("/categories/getCategories")
     public ResponseEntity<List<CategoryResponse>> getCategories(){
         List<CategoryResponse> categories = service.getCategories();
         return ResponseEntity.status(HttpStatus.OK).body(categories);
     }
-    @DeleteMapping("/deleteCategory/{categoryId}")
+    @DeleteMapping("admin/categories/deleteCategory/{categoryId}")
     public void deleteCategory(@PathVariable String categoryId){
         try {
             service.deleteCategory(categoryId);
