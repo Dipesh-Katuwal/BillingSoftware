@@ -17,7 +17,6 @@ import java.sql.Timestamp;
 public class UserResponse {
     private String userId;
     private String email;
-    private String password;
     private String role;
     private String name;
     @CreationTimestamp
