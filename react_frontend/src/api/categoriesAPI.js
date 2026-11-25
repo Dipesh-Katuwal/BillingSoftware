@@ -14,12 +14,21 @@ export const categoriesAPI = {
     }
     return axiosClient
       .post(`/admin${Base}/addCategory`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       })
       .then((res) => res.data);
   },
   getCategories: () =>
-    axiosClient.get(`${Base}/getCategories`).then((r) => r.data),
+    axiosClient
+      .get(`${Base}/getCategories`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
+      .then((r) => r.data),
   deleteCategory: (categoryId) =>
-    axiosClient.delete(`/admin${Base}/deleteCategory/${categoryId}`),
+    axiosClient.delete(`/admin${Base}/deleteCategory/${categoryId}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    }),
 };

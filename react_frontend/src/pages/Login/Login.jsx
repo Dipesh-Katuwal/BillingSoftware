@@ -1,13 +1,37 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import './Login.css'
+import { toast } from 'react-toastify'
+import { AuthAPI } from '../../api/AuthAPI'
+import { useNavigate } from 'react-router-dom'
+import { AppContext } from '../../Context/AppContext'
 
 export const Login = () => {
+  const navigate = useNavigate();
+  const {setAuthData} = useContext(AppContext);
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [loading] = useState(false)
+  const [loading,setLoading] = useState(false)
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
+    setLoading(true);
+    try {
+      const response = await AuthAPI.login({email,password})
+      if(response.status === 200 ){
+        toast.success("Login Successful");
+        setLoading(false);
+        localStorage.setItem("token",response.data.token);
+        localStorage.setItem("role", response.data.role);
+        setAuthData(response.data.token,response.data.role);
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      console.error(error)
+      toast.error("Invalid Email/Password")
+    }finally{
+      setLoading(false)
+    }
   }
 
   return (
