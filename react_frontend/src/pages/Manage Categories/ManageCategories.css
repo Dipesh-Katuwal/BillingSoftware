@@ -8,8 +8,8 @@
   min-height: 0;
 }
 
-.left-column{
-  flex: 0.7;
+.category-form-column{
+  flex: 0.4;
   border: 1px solid #CCC;
   box-sizing: border-box;
   border-radius: 8px;
@@ -17,12 +17,103 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   overflow-y: auto;
   min-height: 0;
+  background-color: rgb(255 255 255 / 3%);
 }
 
-.right-column{
-  flex: 0.5;
+.category-form-column > form {
+  width: 100%;
+  max-width: none;
+  align-self: stretch;
+  border: 0;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgb(0 0 0 / 18%);
+}
+
+.category-form-card {
+  background-color: #fff;
+}
+
+.category-form-heading {
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.category-form-heading h2 {
+  margin: 0 0 4px;
+  color: #252a34;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.category-form-heading p {
+  margin: 0;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.category-image-field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.category-image-upload {
+  flex: 0 0 60px;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  border: 1px dashed #adb5bd !important;
+  background-color: #f8f9fa;
+}
+
+.category-image-upload img {
+  padding: 10px;
+  object-fit: contain;
+}
+
+.category-image-title,
+.category-image-field small {
+  display: block;
+}
+
+.category-image-title {
+  color: #343a40;
+  font-weight: 600;
+}
+
+.category-image-field small {
+  color: #6c757d;
+}
+
+.category-form-card .form-label {
+  color: #343a40;
+}
+
+.category-form-card .form-control:not(.form-control-color) {
+  border-color: #dee2e6;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+}
+
+.category-form-card .form-control:focus {
+  border-color: #86b7fe;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgb(13 110 253 / 12%);
+}
+
+.category-save-button {
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.category-list-column{
+  flex: 0.6;
   border: 1px solid #CCC;
   border-radius: 8px;
   box-sizing: border-box;
@@ -147,13 +238,13 @@
     flex-direction: column;
   }
 
-  .left-column,
-  .right-column {
+  .category-form-column,
+  .category-list-column {
     flex: 1 1 auto;
     width: 100%;
   }
 
-  .right-column {
+  .category-list-column {
     min-height: 320px;
   }
 }

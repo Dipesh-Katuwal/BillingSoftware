@@ -1,9 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { toast } from "react-toastify";
+import { AppContext } from "../../Context/AppContext";
+import { ItemsAPI } from "../../api/ItemsAPI";
+import { assets } from "../../assets/assets";
 
 const ItemForm = () => {
+  const { categories, setItems } = useContext(AppContext);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [backgroundColor, setBackgroundColor] = useState("#b64848");
+  const [categoryId, setCategoryId] = useState("");
+  const [price, setPrice] = useState("");
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const [isSaving, setIsSaving] = useState(false);
@@ -27,15 +33,24 @@ const ItemForm = () => {
     setIsSaving(true);
 
     try {
+      const createdItem = await ItemsAPI.addItem(
+        { name, price: Number(price), description, categoryId },
+        image,
+      );
+      setItems((currentItems) => [createdItem, ...currentItems]);
       setName("");
-      setBackgroundColor("#000000");
+      setDescription("");
+      setCategoryId("");
+      setPrice("");
       setImage(null);
+      toast.success(`Item ${name} added successfully.`);
     } catch (submitError) {
       setError(
         submitError.response?.data?.message ||
           submitError.message ||
           "Unable to save the Item.",
       );
+      toast.error("Unable to save the item.");
     } finally {
       setIsSaving(false);
     }
@@ -43,15 +58,19 @@ const ItemForm = () => {
 
   return (
     <form
-      className="card col-8 h-100 align-self-start text-dark "
+      className="card col-12 text-dark item-form-card"
       onSubmit={handleSubmit}
     >
       <div className="card-body p-4">
-        <div className="mb-4">
+        <div className="item-form-heading">
+          <h2>Add an item</h2>
+          <p>Enter the item details and choose its category.</p>
+        </div>
+
+        <div className="item-image-field mb-4">
           <label
-            className="border rounded bg-light d-flex align-items-center justify-content-center overflow-hidden"
+            className="item-image-upload border rounded d-flex align-items-center justify-content-center overflow-hidden"
             htmlFor="item-image"
-            style={{ width: "48px", height: "48px", cursor: "pointer" }}
             title="Choose item image"
           >
             {imagePreview ? (
@@ -61,9 +80,13 @@ const ItemForm = () => {
                 className="w-100 h-100 object-fit-cover"
               />
             ) : (
-              <span className="text-secondary small">48 x 48</span>
+              <img src={assets.upload} alt="" className="w-100 h-100" />
             )}
           </label>
+          <div>
+            <span className="item-image-title">Item image</span>
+            <small>Optional · Click to upload</small>
+          </div>
           <input
             id="item-image"
             type="file"
@@ -75,7 +98,7 @@ const ItemForm = () => {
 
         <div className="mb-3">
           <label htmlFor="item-name" className="form-label fw-semibold">
-            Item Name
+            Name
           </label>
           <input
             id="item-name"
@@ -109,9 +132,16 @@ const ItemForm = () => {
             className="form-control"
             name="item-category"
             id="item-category"
+            value={categoryId}
+            onChange={(event) => setCategoryId(event.target.value)}
+            required
           >
-            <option value="">--SELECT CATEGORY--</option>
-            <option value="category 1">category1</option>
+            <option value="">-- SELECT CATEGORY --</option>
+            {categories.map((category) => (
+              <option key={category.categoryId} value={category.categoryId}>
+                {category.name}
+              </option>
+            ))}
           </select>
         </div>
         <div className="mb-3">
@@ -126,16 +156,23 @@ const ItemForm = () => {
               id="price"
               className="form-control"
               placeholder="0.00"
-              step=""
+              min="0"
+              step="0.01"
+              value={price}
+              onChange={(event) => setPrice(event.target.value)}
+              required
             />
           </div>
         </div>
-      </div>
-      <div className="p-1">
-            <button type="submit" className="btn btn-warning w-100">
+        {error && <div className="alert alert-danger py-2">{error}</div>}
+        <button
+          type="submit"
+          className="btn btn-primary w-100 item-save-button"
+          disabled={isSaving}
+        >
           {isSaving ? "Saving..." : "Save"}
         </button>
-        </div>
+      </div>
     </form>
   );
 };

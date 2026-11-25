@@ -60,15 +60,19 @@ export const CategoryForm = () => {
 
   return (
     <form
-      className="card col-12 align-self-start text-dark"
+      className="card col-12 align-self-start text-dark category-form-card"
       onSubmit={handleSubmit}
     >
       <div className="card-body p-4">
-        <div className="mb-4">
+        <div className="category-form-heading">
+          <h2>Create a category</h2>
+          <p>Add a name and details to organize your products.</p>
+        </div>
+
+        <div className="category-image-field mb-4">
           <label
-            className="border rounded bg-light d-flex align-items-center justify-content-center overflow-hidden"
+            className="category-image-upload border rounded d-flex align-items-center justify-content-center overflow-hidden"
             htmlFor="category-image"
-            style={{ width: "48px", height: "48px", cursor: "pointer" }}
             title="Choose category image"
           >
             {imagePreview ? (
@@ -81,6 +85,10 @@ export const CategoryForm = () => {
               <img src={assets.upload} className="w-100 h-100 object-fit-content"/>
             )}
           </label>
+          <div>
+            <span className="category-image-title">Category image</span>
+            <small>Optional · Click to upload</small>
+          </div>
           <input
             id="category-image"
             type="file"
@@ -115,7 +123,7 @@ export const CategoryForm = () => {
           <textarea
             id="category-description"
             className="form-control"
-            rows="5"
+            rows="4"
             placeholder="Write content here..."
             value={description}
             onChange={(event) => setDescription(event.target.value)}
@@ -139,7 +147,7 @@ export const CategoryForm = () => {
           />
         </div>
 
-        <button type="submit" className="btn btn-primary w-100">
+        <button type="submit" className="btn btn-primary w-100 category-save-button">
           {isSaving ? "Saving..." : "Save"}
         </button>
       </div>

@@ -6,15 +6,20 @@ export const AppContext = createContext(null);
 
 export const AppContextProvider = (props) => {
   const [categories,setCategories] = useState([]);
+  const [items,setItems] = useState([]);
   const [auth,setAuth] = useState({token:null,role:null})
 
   useEffect(()=>{
+    if (!localStorage.getItem("token")) return;
+
     const get_Categories = async () =>{
        const data = await categoriesAPI.getCategories();
        setCategories(data);
     }
-    get_Categories();
-  },[])
+    get_Categories().catch((error) => {
+      console.error("Unable to load categories:", error);
+    });
+  },[auth.token])
 
   const setAuthData = (token,role) => {
     setAuth({token,role})
@@ -23,6 +28,8 @@ export const AppContextProvider = (props) => {
   const contextValue = {
     categories,
     setCategories,
+    items,
+    setItems,
     auth,
     setAuthData
   }
