@@ -74,6 +74,10 @@ export const CategoryList = () => {
                 <div className="category-card-details">
                   <h2>{category.name}</h2>
                   {category.description && <p>{category.description}</p>}
+                  <p className="category-item-count">
+                    {category.items ?? 0}{" "}
+                    {category.items === 1 ? "item" : "items"}
+                  </p>
                 </div>
                 <button
                   className="btn btn-danger category-delete-button"

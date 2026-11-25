@@ -5,7 +5,7 @@ import { AppContext } from "../../Context/AppContext";
 import { ItemsAPI } from "../../api/ItemsAPI";
 
 const ItemsList = () => {
-  const { items, setItems } = useContext(AppContext);
+  const { items, setCategories, setItems } = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -34,6 +34,13 @@ const ItemsList = () => {
       await ItemsAPI.deleteItem(item.itemId);
       setItems((currentItems) =>
         currentItems.filter((currentItem) => currentItem.itemId !== item.itemId),
+      );
+      setCategories((currentCategories) =>
+        currentCategories.map((category) =>
+          category.categoryId === item.categoryId
+            ? { ...category, items: Math.max(0, (category.items ?? 0) - 1) }
+            : category,
+        ),
       );
       toast.success(`"${item.name}" deleted successfully.`);
     } catch (error) {

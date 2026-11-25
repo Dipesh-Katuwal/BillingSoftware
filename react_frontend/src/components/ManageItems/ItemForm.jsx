@@ -5,7 +5,7 @@ import { ItemsAPI } from "../../api/ItemsAPI";
 import { assets } from "../../assets/assets";
 
 const ItemForm = () => {
-  const { categories, setItems } = useContext(AppContext);
+  const { categories, setCategories, setItems } = useContext(AppContext);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [categoryId, setCategoryId] = useState("");
@@ -38,6 +38,13 @@ const ItemForm = () => {
         image,
       );
       setItems((currentItems) => [createdItem, ...currentItems]);
+      setCategories((currentCategories) =>
+        currentCategories.map((category) =>
+          category.categoryId === createdItem.categoryId
+            ? { ...category, items: (category.items ?? 0) + 1 }
+            : category,
+        ),
+      );
       setName("");
       setDescription("");
       setCategoryId("");
