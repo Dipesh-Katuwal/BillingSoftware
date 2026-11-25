@@ -3,6 +3,7 @@ package in.dipesh.spring_backend.config;
 import in.dipesh.spring_backend.filter.JwtRequestFilter;
 import in.dipesh.spring_backend.service.Impl.AppUserDetailsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -33,7 +34,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception { // It tells Spring Security exactly how to handle every single incoming HTTP request
         http.cors(cors -> cors.configurationSource(corsConfigurationSource())) // Connects the CORS rules above. Hey, remember those CORS rules we wrote in the previous class (SecurityConfig)? Apply them here.
                 .csrf(csrf -> csrf.disable()) // Disables CSRF for APIs , no need while using JWT tokens
-                    .authorizeHttpRequests(auth -> auth.requestMatchers("/login","/encode").permitAll() // Allow login without JWT
+                    .authorizeHttpRequests(auth -> auth
+                            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                            .requestMatchers("/login","/encode").permitAll() // Allow login without JWT
                             .requestMatchers("/category", "/items").hasAnyRole("ADMIN","USER")
                             .requestMatchers("/admin/**").hasRole("ADMIN")
                             .anyRequest().authenticated()) // Everything else needs JWT

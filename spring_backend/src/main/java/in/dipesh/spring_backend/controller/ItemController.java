@@ -25,6 +25,7 @@ public class ItemController {
 
     @DeleteMapping("/admin/item/{id}")
     public ResponseEntity<Void> deleteItem(@PathVariable String id){
+        System.out.println("DELETE ENDPOINT REACHED!");
         itemService.deleteItem(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

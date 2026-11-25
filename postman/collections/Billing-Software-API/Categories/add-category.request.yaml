@@ -1,0 +1,16 @@
+$kind: http-request
+name: Add Category
+method: POST
+url: '{{baseUrl}}/admin/categories/addCategory'
+order: 1000
+body:
+  type: formdata
+  content:
+    - key: category
+      type: text
+      value: '{"name": "string", "description": "string"}'
+      contentType: application/json
+    - key: file
+      type: file
+      src: ''
+      description: 'Image file (optional)'

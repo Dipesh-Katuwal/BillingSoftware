@@ -38,7 +38,7 @@ public class JwtUtils {
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername()) // Usually the email
                 .setIssuedAt(new Date(System.currentTimeMillis())) // Current time
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // Expires in 10 hours
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10 * 5)) // Expires in 10 hours
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256) // Sign it with the secret key
                 .compact(); // Build the string
     }

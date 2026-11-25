@@ -1,0 +1,16 @@
+$kind: http-request
+name: Add Item
+method: POST
+url: '{{baseUrl}}/admin/addItem'
+order: 1000
+body:
+  type: formdata
+  content:
+    - key: item
+      type: text
+      value: '{"name": "string", "price": 0, "categoryId": "string"}'
+      contentType: application/json
+    - key: file
+      type: file
+      src: ''
+      description: 'Image file (optional)'

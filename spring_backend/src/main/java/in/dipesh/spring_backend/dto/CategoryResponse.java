@@ -23,4 +23,5 @@ public class CategoryResponse {
     private Instant createdAt;
     @UpdateTimestamp
     private Instant updatedAt;
+    private Integer items;
 }

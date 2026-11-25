@@ -5,10 +5,11 @@ const UserForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isSaving, setIsSaving] = useState(false);
+    const [role,setRole] = useState("ROLE_USER");
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+        
     }
     return (
         <form className="card col-8 h-100 align-self-start text-dark" onSubmit={handleSubmit}>

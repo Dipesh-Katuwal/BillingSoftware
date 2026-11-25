@@ -3,6 +3,7 @@ package in.dipesh.spring_backend.service.Impl;
 import in.dipesh.spring_backend.dto.CategoryRequest;
 import in.dipesh.spring_backend.dto.CategoryResponse;
 import in.dipesh.spring_backend.entity.CategoryEntity;
+import in.dipesh.spring_backend.repository.ItemRepository;
 import in.dipesh.spring_backend.service.CategoryService;
 import in.dipesh.spring_backend.service.FileUploadService;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ import java.util.UUID;
 public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository repository;
     private FileUploadService fileUploadService;
+    private ItemRepository itemRepository;
 
     @Override
     public CategoryResponse addCategory(CategoryRequest request, MultipartFile file) {
@@ -41,6 +43,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     private CategoryResponse convertToResponse(CategoryEntity newEntity) {
+        Integer itemsCount = itemRepository.countByCategoryId(newEntity.getId());
         return CategoryResponse.builder()
                 .categoryId(newEntity.getCategoryId())
                 .name(newEntity.getName())
@@ -48,7 +51,8 @@ public class CategoryServiceImpl implements CategoryService {
                 .bgColor(newEntity.getBgColor())
                 .imgUrl(newEntity.getImgUrl())
                 .createdAt(newEntity.getCreatedAt())
-                .updatedAt(newEntity.getUpdatedAt()).build();
+                .updatedAt(newEntity.getUpdatedAt())
+                .items(itemsCount).build();
     }
     public CategoryEntity convertToEntity(CategoryRequest request){
         return CategoryEntity.builder()

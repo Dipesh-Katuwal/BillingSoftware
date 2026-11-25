@@ -57,7 +57,7 @@ public class FileUploadServiceImpl implements FileUploadService {
             String key = imgUrl.substring(imgUrl.lastIndexOf("/")+1);
 
             DeleteObjectRequest deleteRequest = DeleteObjectRequest.builder()
-                    .bucket("dipesh-billingsoftwae-2026")
+                    .bucket("dipesh-billingsoftware-2026")
                     .key(key).build();
 
             s3client.deleteObject(deleteRequest);
