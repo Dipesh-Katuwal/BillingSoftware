@@ -8,6 +8,7 @@ export const AppContextProvider = (props) => {
   const [categories,setCategories] = useState([]);
   const [items,setItems] = useState([]);
   const [users,setUsers] = useState([]);
+  const [selectedCategoryId,setSelectedCategoryId] = useState(null);
   const [auth,setAuth] = useState({token:null,role:null})
 
   useEffect(()=>{
@@ -33,6 +34,8 @@ export const AppContextProvider = (props) => {
     setItems,
     users,
     setUsers,
+    selectedCategoryId,
+    setSelectedCategoryId,
     auth,
     setAuthData
   }

@@ -3,14 +3,15 @@ import { AppContext } from "../../Context/AppContext";
 import "./Categories.css";
 
 const Categories = () => {
-  const { categories } = useContext(AppContext);
+  const { categories, selectedCategoryId, setSelectedCategoryId } =
+    useContext(AppContext);
 
   return (
     <section className="explore-categories">
       <header className="explore-categories-heading">
         <div>
           <h2>Categories</h2>
-          <p>Browse your products by category</p>
+          <p>Choose a category to filter items. Click it again to clear.</p>
         </div>
         <span className="explore-categories-count">
           {categories.length} {categories.length === 1 ? "category" : "categories"}
@@ -20,9 +21,22 @@ const Categories = () => {
       {categories.length > 0 ? (
         <div className="explore-category-list">
           {categories.map((category) => (
-            <article
-              className="explore-category-card"
+            <button
+              className={`explore-category-card ${
+                selectedCategoryId === category.categoryId
+                  ? "selected"
+                  : ""
+              }`}
               key={category.categoryId}
+              type="button"
+              aria-pressed={selectedCategoryId === category.categoryId}
+              onClick={() =>
+                setSelectedCategoryId((currentCategoryId) =>
+                  currentCategoryId === category.categoryId
+                    ? null
+                    : category.categoryId,
+                )
+              }
               style={{ backgroundColor: category.bgColor || "#343a40" }}
             >
               {category.imgUrl && (
@@ -41,7 +55,7 @@ const Categories = () => {
                   {(category.items ?? 0) === 1 ? "item" : "items"}
                 </span>
               </div>
-            </article>
+            </button>
           ))}
         </div>
       ) : (
