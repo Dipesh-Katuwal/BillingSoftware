@@ -17,7 +17,7 @@ export const Explore = () => {
           <Categories/>
         </div>
         <hr className='horizontal-line'/>
-        <div className="second-row" style={{overflow:"auto"}}>
+        <div className="second-row">
           <Items/>
         </div>
       </div>

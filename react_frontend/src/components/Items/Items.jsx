@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { FaCartArrowDown } from "react-icons/fa";
 import { ItemsAPI } from "../../api/ItemsAPI";
 import { AppContext } from "../../Context/AppContext";
 import "./Items.css";
@@ -7,6 +8,7 @@ const Items = () => {
   const {
     items,
     setItems,
+    setCartItems,
     categories,
     selectedCategoryId,
   } = useContext(AppContext);
@@ -42,6 +44,24 @@ const Items = () => {
   const selectedCategory = categories.find(
     (category) => category.categoryId === selectedCategoryId,
   );
+
+  const addToCart = (item) => {
+    setCartItems((currentCartItems) => {
+      const existingItem = currentCartItems.find(
+        (cartItem) => cartItem.itemId === item.itemId,
+      );
+
+      if (existingItem) {
+        return currentCartItems.map((cartItem) =>
+          cartItem.itemId === item.itemId
+            ? { ...cartItem, quantity: cartItem.quantity + 1 }
+            : cartItem,
+        );
+      }
+
+      return [{ ...item, quantity: 1 }, ...currentCartItems];
+    });
+  };
 
   return (
     <section className="explore-items">
@@ -98,6 +118,15 @@ const Items = () => {
                       {item.name.charAt(0).toUpperCase()}
                     </span>
                   )}
+                  <button
+                    className="explore-item-cart-button"
+                    type="button"
+                    aria-label={`Add ${item.name} to cart`}
+                    title="Add to cart"
+                    onClick={() => addToCart(item)}
+                  >
+                    <FaCartArrowDown />
+                  </button>
                   {item.categoryName && (
                     <span className="explore-item-category">
                       {item.categoryName}

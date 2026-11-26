@@ -38,8 +38,11 @@
 }
 
 .explore-container .second-row {
+  display: flex;
   flex: 1 1 auto;
+  flex-direction: column;
   min-height: 0;
+  overflow: hidden;
   font-size: 1.1rem;
   font-weight: 600;
 }
