@@ -1,0 +1,32 @@
+.cart-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  color: #f8f9fa;
+}
+
+.cart-summary h2 {
+  margin: 0 0 2px;
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.cart-summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #c3c9cb;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.cart-summary-total {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid rgb(255 255 255 / 15%);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+}

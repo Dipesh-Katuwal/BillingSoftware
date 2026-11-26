@@ -69,6 +69,10 @@
   box-shadow: 0 3px 10px rgb(0 0 0 / 18%);
 }
 
+.explore-all-category-card {
+  background: linear-gradient(135deg, #536976, #292e49);
+}
+
 .explore-category-card.selected {
   border: 2px solid #73b5ff;
   box-shadow: 0 0 0 2px rgb(13 110 253 / 30%);

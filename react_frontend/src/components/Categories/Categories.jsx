@@ -11,7 +11,7 @@ const Categories = () => {
       <header className="explore-categories-heading">
         <div>
           <h2>Categories</h2>
-          <p>Choose a category to filter items. Click it again to clear.</p>
+          <p>Select “All items” to clear the category filter.</p>
         </div>
         <span className="explore-categories-count">
           {categories.length} {categories.length === 1 ? "category" : "categories"}
@@ -20,6 +20,20 @@ const Categories = () => {
 
       {categories.length > 0 ? (
         <div className="explore-category-list">
+          <button
+            className={`explore-category-card explore-all-category-card ${
+              selectedCategoryId === null ? "selected" : ""
+            }`}
+            type="button"
+            aria-pressed={selectedCategoryId === null}
+            onClick={() => setSelectedCategoryId(null)}
+          >
+            <div className="explore-category-shade" />
+            <div className="explore-category-details">
+              <h3>All items</h3>
+              <span>Show every item</span>
+            </div>
+          </button>
           {categories.map((category) => (
             <button
               className={`explore-category-card ${
