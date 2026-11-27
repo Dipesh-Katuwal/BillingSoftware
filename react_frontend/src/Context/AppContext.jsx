@@ -8,6 +8,7 @@ export const AppContextProvider = (props) => {
   const [categories,setCategories] = useState([]);
   const [items,setItems] = useState([]);
   const [cartItems,setCartItems] = useState([]);
+  const [customer,setCustomer] = useState({ name: "", phone: "" });
   const [users,setUsers] = useState([]);
   const [selectedCategoryId,setSelectedCategoryId] = useState(null);
   const [auth,setAuth] = useState({token:null,role:null})
@@ -35,6 +36,8 @@ export const AppContextProvider = (props) => {
     setItems,
     cartItems,
     setCartItems,
+    customer,
+    setCustomer,
     users,
     setUsers,
     selectedCategoryId,

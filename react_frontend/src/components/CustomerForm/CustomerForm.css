@@ -1,0 +1,58 @@
+.customer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: 100%;
+}
+
+.customer-form h2 {
+  margin: 0;
+  color: #f8f9fa;
+  font-size: 0.95rem;
+  font-weight: 650;
+}
+
+.customer-form-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.customer-form-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  color: #c3c9cb;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.customer-form-fields input {
+  width: 100%;
+  min-width: 0;
+  height: 32px;
+  padding: 5px 8px;
+  border: 1px solid rgb(255 255 255 / 16%);
+  border-radius: 6px;
+  background-color: #2b3032;
+  color: #f8f9fa;
+  font-size: 0.8rem;
+}
+
+.customer-form-fields input::placeholder {
+  color: #929a9d;
+}
+
+.customer-form-fields input:focus {
+  border-color: #86b7fe;
+  outline: 0;
+  box-shadow: 0 0 0 2px rgb(13 110 253 / 18%);
+}
+
+@media (max-width: 420px) {
+  .customer-form-fields {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}

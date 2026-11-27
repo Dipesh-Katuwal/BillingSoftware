@@ -1,9 +1,10 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AppContext } from "../../Context/AppContext";
 import "./CartSummary.css";
 
 const CartSummary = () => {
   const { cartItems } = useContext(AppContext);
+  const [paymentMethod, setPaymentMethod] = useState("cash");
   const taxRate = 2;
   const subtotalCents = cartItems.reduce(
     (total, item) =>
@@ -29,6 +30,36 @@ const CartSummary = () => {
         <span>Grand total</span>
         <span>${formatPrice(grandTotalCents)}</span>
       </div>
+      <div className="cart-payment-methods" aria-label="Payment method">
+        <button
+          className={`cart-payment-button ${
+            paymentMethod === "cash" ? "selected" : ""
+          }`}
+          type="button"
+          aria-pressed={paymentMethod === "cash"}
+          onClick={() => setPaymentMethod("cash")}
+        >
+          Cash
+        </button>
+        <button
+          className={`cart-payment-button ${
+            paymentMethod === "online" ? "selected" : ""
+          }`}
+          type="button"
+          aria-pressed={paymentMethod === "online"}
+          onClick={() => setPaymentMethod("online")}
+        >
+          Pay online
+        </button>
+      </div>
+      <button
+        className="cart-place-order-button"
+        type="button"
+        disabled
+        title="Order submission will be available when the backend is ready."
+      >
+        Place order
+      </button>
     </section>
   );
 };
