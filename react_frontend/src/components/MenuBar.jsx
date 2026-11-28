@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 const MenuBar = () => {
   const navigate = useNavigate();
-  const {setAuthData} = useContext(AppContext);
+  const {auth,setAuthData} = useContext(AppContext);
   const logout = () =>{
     localStorage.removeItem("token");
     localStorage.removeItem("role");
@@ -18,7 +18,7 @@ const MenuBar = () => {
   }
 
   return (
-    <nav className={`navbar navbar-expand-lg navbar-dark ${styles.navbar}`}>
+    <nav className={`navbar navbar-expand-xl navbar-dark ${styles.navbar}`}>
       <Link className={`navbar-brand ${styles.brand}`} to="/dashboard">
         <img
           src={assets.logo}
@@ -63,8 +63,18 @@ const MenuBar = () => {
               Manage Users
             </Link>
           </li>
+          <li className="nav-item">
+            <Link className={`nav-link ${styles.link}`} to="/order-history">
+              Order History
+            </Link>
+          </li>
         </ul>
-        <ul className="navbar-nav ms-auto me-3 me-lg-4">
+        <ul className="navbar-nav ms-auto me-3 me-lg-4 align-items-xl-center">
+          {auth.email && (
+            <li className="nav-item">
+              <span className={styles.accountEmail} title={auth.email}>{auth.email}</span>
+            </li>
+          )}
           <li className="nav-item dropdown">
             <a
               href="#"

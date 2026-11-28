@@ -47,6 +47,12 @@ public class EsewaPaymentServiceImpl implements EsewaPaymentService {
                     HttpStatus.CONFLICT,
                     "This order has already been paid");
         }
+        if (order.getPaymentStatus() == PaymentStatus.PENDING
+                && order.getPaymentMethod() != PaymentMethod.ESEWA) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Another payment for this order is already pending");
+        }
 
         order.setPaymentMethod(PaymentMethod.ESEWA);
         order.setPaymentStatus(PaymentStatus.PENDING);
@@ -128,10 +134,20 @@ public class EsewaPaymentServiceImpl implements EsewaPaymentService {
                         HttpStatus.NOT_FOUND,
                         "Order not found: " + orderId));
 
+        if (order.getPaymentMethod() != PaymentMethod.ESEWA) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "This order does not have an eSewa payment");
+        }
         return refreshOrderStatus(order);
     }
 
     private PaymentResult refreshOrderStatus(OrderEntity order) {
+        if (order.getPaymentMethod() != PaymentMethod.ESEWA) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "This order does not have an eSewa payment");
+        }
         EsewaStatusResponse verification;
         try {
             verification = esewaStatusClient.verify(

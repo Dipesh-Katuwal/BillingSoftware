@@ -35,6 +35,12 @@ public class OrderEntity {
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 
+    private String khaltiPidx;
+    private String khaltiPaymentUrl;
+
+    @Column(unique = true)
+    private String stripeSessionId;
+
     private LocalDateTime createdAt;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true) //Cascade = "whatever happens to the parent, do the same to the children." e.g orderRepository.save(order) saves order AND all its items automatically ✅

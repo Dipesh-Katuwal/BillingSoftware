@@ -98,6 +98,7 @@ class EsewaPaymentServiceImplTest {
                 .orderId("ORD-VERIFIED")
                 .grandTotal(new BigDecimal("372.30"))
                 .paymentStatus(PaymentStatus.PENDING)
+                .paymentMethod(PaymentMethod.ESEWA)
                 .build();
         when(orderRepository.findByOrderId(order.getOrderId()))
                 .thenReturn(Optional.of(order));
@@ -127,6 +128,7 @@ class EsewaPaymentServiceImplTest {
                 .orderId("ORD-INCOMPLETE")
                 .grandTotal(new BigDecimal("372.30"))
                 .paymentStatus(PaymentStatus.PENDING)
+                .paymentMethod(PaymentMethod.ESEWA)
                 .build();
         when(orderRepository.findByOrderId(order.getOrderId()))
                 .thenReturn(Optional.of(order));
@@ -156,6 +158,7 @@ class EsewaPaymentServiceImplTest {
                 .orderId("ORD-WRONG-AMOUNT")
                 .grandTotal(new BigDecimal("372.30"))
                 .paymentStatus(PaymentStatus.PENDING)
+                .paymentMethod(PaymentMethod.ESEWA)
                 .build();
         when(orderRepository.findByOrderId(order.getOrderId()))
                 .thenReturn(Optional.of(order));

@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { MdDelete } from "react-icons/md";
 import { AppContext } from "../../Context/AppContext";
 import { ItemsAPI } from "../../api/ItemsAPI";
+import { formatNpr } from "../../utils/currency.js";
 
 const ItemsList = () => {
   const { items, setCategories, setItems } = useContext(AppContext);
@@ -85,7 +86,7 @@ const ItemsList = () => {
                   </div>
                   <div className="item-card-details">
                     <h2>{item.name}</h2>
-                    <p>{item.categoryName} · ${item.price}</p>
+                    <p>{item.categoryName} · {formatNpr(item.price)}</p>
                     {item.description && <p>{item.description}</p>}
                   </div>
                   <button

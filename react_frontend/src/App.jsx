@@ -8,6 +8,8 @@ import { ManageItems } from './pages/Manage Items/ManageItems'
 import { ManageUsers } from './pages/Manage Users/ManageUsers'
 import { ToastContainer } from 'react-toastify'
 import { Login } from './pages/Login/Login'
+import PaymentResult from './pages/PaymentResult/PaymentResult'
+import OrderHistory from './pages/OrderHistory/OrderHistory'
 
 function App() {
   const location = useLocation();
@@ -21,6 +23,8 @@ function App() {
         <Route path='/categories' element={<ManageCategories/>}/>
         <Route path='/items' element={<ManageItems/>}/>
         <Route path='/users' element={<ManageUsers/>}/>
+        <Route path='/payment-result' element={<PaymentResult/>}/>
+        <Route path='/order-history' element={<OrderHistory/>}/>
       </Routes>
       <Routes>
         <Route path='/login' element={<Login/>}/>

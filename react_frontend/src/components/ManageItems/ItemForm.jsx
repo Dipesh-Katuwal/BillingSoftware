@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { AppContext } from "../../Context/AppContext";
 import { ItemsAPI } from "../../api/ItemsAPI";
 import { assets } from "../../assets/assets";
+import { CURRENCY_CODE, CURRENCY_SYMBOL } from "../../utils/currency.js";
 
 const ItemForm = () => {
   const { categories, setCategories, setItems } = useContext(AppContext);
@@ -153,10 +154,10 @@ const ItemForm = () => {
         </div>
         <div className="mb-3">
           <label htmlFor="price" className="form-label">
-            Price
+            Price ({CURRENCY_CODE})
           </label>
           <div className="input-group">
-            <span className="input-group-text">$</span>
+            <span className="input-group-text">{CURRENCY_SYMBOL}</span>
             <input
               type="number"
               name="price"

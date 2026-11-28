@@ -1,6 +1,7 @@
 import { createContext, useEffect } from "react";
 import { categoriesAPI } from "../api/categoriesAPI";
 import { useState } from "react";
+import { AuthAPI } from "../api/AuthAPI";
 
 export const AppContext = createContext(null);
 
@@ -11,7 +12,22 @@ export const AppContextProvider = (props) => {
   const [customer,setCustomer] = useState({ name: "", phone: "" });
   const [users,setUsers] = useState([]);
   const [selectedCategoryId,setSelectedCategoryId] = useState(null);
-  const [auth,setAuth] = useState({token:null,role:null})
+  const [auth,setAuth] = useState(() => ({
+    token: localStorage.getItem("token"),
+    role: localStorage.getItem("role"),
+    email: null,
+  }))
+
+  useEffect(() => {
+    if (!auth.token) return;
+    let ignore = false;
+    AuthAPI.currentUser()
+      .then(({ data }) => {
+        if (!ignore) setAuth((current) => ({ ...current, email: data.email }));
+      })
+      .catch(() => console.warn("Could not load the signed-in email."));
+    return () => { ignore = true; };
+  }, [auth.token]);
 
   useEffect(()=>{
     if (!localStorage.getItem("token")) return;
@@ -25,8 +41,8 @@ export const AppContextProvider = (props) => {
     });
   },[auth.token])
 
-  const setAuthData = (token,role) => {
-    setAuth({token,role})
+  const setAuthData = (token,role,email = null) => {
+    setAuth({token,role,email})
   }
 
   const contextValue = {

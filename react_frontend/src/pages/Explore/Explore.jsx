@@ -1,4 +1,6 @@
 import { useContext } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import OrderReceipt from '../../components/OrderReceipt/OrderReceipt'
 import './Explore.css'
 import { AppContext } from '../../Context/AppContext'
 import Categories from '../../components/Categories/Categories';
@@ -9,9 +11,19 @@ import CustomerForm from '../../components/CustomerForm/CustomerForm';
 
 export const Explore = () => {
   const {categories} =useContext(AppContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const receiptOrderId = location.state?.receiptOrderId;
   console.log(categories);
   return (
     <div className='explore-container text-light'>
+      {receiptOrderId && (
+        <OrderReceipt
+          key={receiptOrderId}
+          orderId={receiptOrderId}
+          onClose={() => navigate('/explore', { replace: true, state: null })}
+        />
+      )}
       <div className="left-column">
         <div className="first-row" style={{overflow:"auto"}}>
           <Categories/>

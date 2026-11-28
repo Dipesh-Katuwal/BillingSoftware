@@ -23,7 +23,7 @@ export const Login = () => {
         setLoading(false);
         localStorage.setItem("token",response.data.token);
         localStorage.setItem("role", response.data.role);
-        setAuthData(response.data.token,response.data.role);
+        setAuthData(response.data.token,response.data.role,response.data.email);
         navigate("/dashboard");
       }
     } catch (error) {

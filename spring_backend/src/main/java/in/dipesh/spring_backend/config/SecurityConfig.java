@@ -35,12 +35,21 @@ public class SecurityConfig {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource())) // Connects the CORS rules above. Hey, remember those CORS rules we wrote in the previous class (SecurityConfig)? Apply them here.
                 .csrf(csrf -> csrf.disable()) // Disables CSRF for APIs , no need while using JWT tokens
                     .authorizeHttpRequests(auth -> auth
+                            // Allow servlet error rendering without turning a server failure into 403.
+                            .dispatcherTypeMatchers(jakarta.servlet.DispatcherType.ERROR).permitAll()
                             .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                             .requestMatchers("/login","/encode").permitAll() // Allow login without JWT
-                            .requestMatchers("/payments/esewa/success", "/payments/esewa/failure").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/payments/stripe/webhook").permitAll()
+                            .requestMatchers(
+                                    "/payments/esewa/success",
+                                    "/payments/esewa/failure",
+                                    "/payments/khalti/callback").permitAll()
                             .requestMatchers("/category", "/items").hasAnyRole("ADMIN","USER")
                             .requestMatchers("/admin/**").hasRole("ADMIN")
                             .anyRequest().authenticated()) // Everything else needs JWT
+                            .exceptionHandling(errors -> errors.authenticationEntryPoint(
+                                    new org.springframework.security.web.authentication.HttpStatusEntryPoint(
+                                            org.springframework.http.HttpStatus.UNAUTHORIZED)))
                             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                             // Tells Spring: "Do not create an HTTP Session. Do not remember this user between requests."
                             // This is the whole point of JWT. Traditional Spring apps create a session ID and store it in a cookie. With JWT, every single request must carry its own ID card (the token). The server shouldn't have to remember anything.

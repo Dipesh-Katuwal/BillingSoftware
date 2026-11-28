@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { FaCartArrowDown } from "react-icons/fa";
 import { ItemsAPI } from "../../api/ItemsAPI";
 import { AppContext } from "../../Context/AppContext";
+import { formatNpr } from "../../utils/currency.js";
 import "./Items.css";
 
 const Items = () => {
@@ -137,7 +138,7 @@ const Items = () => {
                   <div className="explore-item-title-row">
                     <h3>{item.name}</h3>
                     <span className="explore-item-price">
-                      ${Number(item.price).toFixed(2)}
+                      {formatNpr(item.price)}
                     </span>
                   </div>
                   {item.description && <p>{item.description}</p>}

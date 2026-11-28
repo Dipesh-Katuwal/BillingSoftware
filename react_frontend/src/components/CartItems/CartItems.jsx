@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AppContext } from "../../Context/AppContext";
+import { formatNpr } from "../../utils/currency.js";
 import "./CartItems.css";
 
 const CartItems = () => {
@@ -43,7 +44,7 @@ const CartItems = () => {
               )}
               <div className="cart-item-details">
                 <h3>{item.name}</h3>
-                <span>${Number(item.price).toFixed(2)} each</span>
+                <span>{formatNpr(item.price)} each</span>
               </div>
               <div className="cart-item-quantity">
                 <button

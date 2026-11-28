@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,6 +29,11 @@ public class AuthController {
     private final AppUserDetailsService appUserDetailsService;
     private final JwtUtils jwtUtils;
     private final UserService userService;
+
+    @GetMapping("/me")
+    public Map<String, String> currentUser(Authentication authentication) {
+        return Map.of("email", authentication.getName());
+    }
 
     @PostMapping("/login")
     public AuthResponse login(@RequestBody AuthRequest request) throws Exception{
