@@ -29,7 +29,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemResponse addItem(ItemRequest request, MultipartFile file) {
-        String imgUrl = fileUploadService.uploadFile(file);
+        String imgUrl = file == null || file.isEmpty()
+                ? null
+                : fileUploadService.uploadFile(file);
         ItemEntity entity = convertToEntity(request,imgUrl);
         repository.save(entity);
         return convertToResponse(entity);
@@ -38,7 +40,9 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void deleteItem(String itemId) {
         ItemEntity entity = repository.findByItemId(itemId).orElseThrow(()->new RuntimeException("Item not found with id : "+ itemId));
-        boolean isFileDelete = fileUploadService.deleteFile(entity.getImgUrl());
+        boolean isFileDelete = entity.getImgUrl() == null
+                || entity.getImgUrl().isEmpty()
+                || fileUploadService.deleteFile(entity.getImgUrl());
         if (isFileDelete){
             repository.delete(entity);
         }else{
