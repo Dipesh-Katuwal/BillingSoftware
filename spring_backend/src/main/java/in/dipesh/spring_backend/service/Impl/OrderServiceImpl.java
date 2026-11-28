@@ -6,6 +6,8 @@ import in.dipesh.spring_backend.dto.OrderResponse;
 import in.dipesh.spring_backend.entity.ItemEntity;
 import in.dipesh.spring_backend.entity.OrderEntity;
 import in.dipesh.spring_backend.entity.OrderItemEntity;
+import in.dipesh.spring_backend.entity.PaymentMethod;
+import in.dipesh.spring_backend.entity.PaymentStatus;
 import in.dipesh.spring_backend.repository.ItemRepository;
 import in.dipesh.spring_backend.repository.OrderRepository;
 import in.dipesh.spring_backend.service.OrderService;
@@ -31,6 +33,20 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public OrderResponse createOrder(OrderRequest request) {
+        return createOrder(request, null, PaymentStatus.UNPAID);
+    }
+
+    @Override
+    @Transactional
+    public OrderResponse createCashOrder(OrderRequest request) {
+        return createOrder(request, PaymentMethod.CASH, PaymentStatus.PAID);
+    }
+
+    private OrderResponse createOrder(
+            OrderRequest request,
+            PaymentMethod paymentMethod,
+            PaymentStatus paymentStatus
+    ) {
         List<OrderItemEntity> orderItems = new ArrayList<>();
         BigDecimal subTotal = BigDecimal.ZERO;
 
@@ -61,6 +77,8 @@ public class OrderServiceImpl implements OrderService {
                 .subTotal(subTotal)
                 .tax(tax)
                 .grandTotal(grandTotal)
+                .paymentMethod(paymentMethod)
+                .paymentStatus(paymentStatus)
                 .build();
 
         OrderEntity savedOrder = orderRepository.save(order);
@@ -71,6 +89,7 @@ public class OrderServiceImpl implements OrderService {
                 .tax(savedOrder.getTax())
                 .grandTotal(savedOrder.getGrandTotal())
                 .paymentStatus(savedOrder.getPaymentStatus())
+                .paymentMethod(savedOrder.getPaymentMethod())
                 .build();
     }
 }

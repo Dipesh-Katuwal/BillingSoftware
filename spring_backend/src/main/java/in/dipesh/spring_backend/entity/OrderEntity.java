@@ -32,6 +32,9 @@ public class OrderEntity {
     @Builder.Default //stop Lombok's builder from wiping out your = UNPAID default.
     private PaymentStatus paymentStatus = PaymentStatus.UNPAID;
 
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
+
     private LocalDateTime createdAt;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true) //Cascade = "whatever happens to the parent, do the same to the children." e.g orderRepository.save(order) saves order AND all its items automatically ✅

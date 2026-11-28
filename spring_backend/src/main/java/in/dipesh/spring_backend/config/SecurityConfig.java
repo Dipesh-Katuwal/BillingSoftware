@@ -37,6 +37,7 @@ public class SecurityConfig {
                     .authorizeHttpRequests(auth -> auth
                             .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                             .requestMatchers("/login","/encode").permitAll() // Allow login without JWT
+                            .requestMatchers("/payments/esewa/success", "/payments/esewa/failure").permitAll()
                             .requestMatchers("/category", "/items").hasAnyRole("ADMIN","USER")
                             .requestMatchers("/admin/**").hasRole("ADMIN")
                             .anyRequest().authenticated()) // Everything else needs JWT

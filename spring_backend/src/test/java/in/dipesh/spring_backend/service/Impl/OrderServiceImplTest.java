@@ -5,6 +5,7 @@ import in.dipesh.spring_backend.dto.OrderRequest;
 import in.dipesh.spring_backend.dto.OrderResponse;
 import in.dipesh.spring_backend.entity.ItemEntity;
 import in.dipesh.spring_backend.entity.OrderEntity;
+import in.dipesh.spring_backend.entity.PaymentMethod;
 import in.dipesh.spring_backend.entity.PaymentStatus;
 import in.dipesh.spring_backend.repository.ItemRepository;
 import in.dipesh.spring_backend.repository.OrderRepository;
@@ -67,5 +68,30 @@ class OrderServiceImplTest {
 
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
         verifyNoInteractions(orderRepository);
+    }
+
+    @Test
+    void cashOrderIsRecordedAsPaidWithCashPaymentMethod() {
+        ItemEntity catalogItem = ItemEntity.builder()
+                .itemId("item-123")
+                .name("Tea")
+                .price(new BigDecimal("100.00"))
+                .build();
+        when(itemRepository.findByItemId("item-123")).thenReturn(Optional.of(catalogItem));
+        when(orderRepository.save(any(OrderEntity.class))).thenAnswer(invocation -> {
+            OrderEntity order = invocation.getArgument(0);
+            order.setOrderId("ORD-CASH");
+            return order;
+        });
+
+        OrderResponse response = orderService.createCashOrder(new OrderRequest(
+                "Alex",
+                "9800000000",
+                List.of(new OrderItemRequest("item-123", 2))));
+
+        assertEquals("ORD-CASH", response.getOrderId());
+        assertEquals(PaymentStatus.PAID, response.getPaymentStatus());
+        assertEquals(PaymentMethod.CASH, response.getPaymentMethod());
+        assertEquals(new BigDecimal("204.00"), response.getGrandTotal());
     }
 }

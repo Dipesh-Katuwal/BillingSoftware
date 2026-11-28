@@ -20,4 +20,12 @@ public class OrderController {
     public ResponseEntity<OrderResponse> createOrder(@Valid @RequestBody OrderRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(orderService.createOrder(request));
     }
+
+    @PostMapping("/orders/cash")
+    public ResponseEntity<OrderResponse> createCashOrder(
+            @Valid @RequestBody OrderRequest request
+    ) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(orderService.createCashOrder(request));
+    }
 }

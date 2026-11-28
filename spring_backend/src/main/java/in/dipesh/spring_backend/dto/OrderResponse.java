@@ -1,6 +1,7 @@
 package in.dipesh.spring_backend.dto;
 
 import in.dipesh.spring_backend.entity.PaymentStatus;
+import in.dipesh.spring_backend.entity.PaymentMethod;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,4 +19,5 @@ public class OrderResponse {
     private BigDecimal tax;
     private BigDecimal grandTotal;
     private PaymentStatus paymentStatus;
+    private PaymentMethod paymentMethod;
 }
